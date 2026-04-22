@@ -76,3 +76,41 @@ def preprocess_and_split(
     )
 
     return train, validate, test
+
+
+def define_subsets(data: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """
+    Create predefined tissue subsets used in the project.
+
+    Returns a dictionary of named subsets.
+    """
+    subsets = {
+        "lung": filter_by_tissues(
+            data,
+            [
+                "Lung - Non-small cell carcinoma",
+                "Lung - Adenocarcinoma",
+                "Lung",
+            ],
+        ),
+        "colon": filter_by_tissues(
+            data,
+            [
+                "Colon - Adenocarcinoma",
+                "Colon - Mucinous adenocarcinoma",
+                "Colon - Serrated adenocarcinoma",
+                "Colon - Sigmoid",
+                "Colon - Transverse",
+            ],
+        ),
+        "kidney": filter_by_tissues(
+            data,
+            [
+                "Kidney - Clear cell renal cell carcinoma",
+                "Kidney - Papillary renal cell carcinoma",
+                "Kidney",
+            ],
+        ),
+    }
+
+    return subsets
