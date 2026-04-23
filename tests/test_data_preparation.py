@@ -103,6 +103,14 @@ def test_define_subsets_filters_lung_subset_correctly():
 
     subsets = define_subsets(data)
 
+    assert subsets["lung"]["tissue"].tolist() == [
+        "Lung - Non-small cell carcinoma",
+        "Lung - Adenocarcinoma",
+        "Lung",
+    ]
+
+
+
     def test_preprocess_and_split_raises_error_when_label_is_missing():
     data = pd.DataFrame(
         {
@@ -113,9 +121,3 @@ def test_define_subsets_filters_lung_subset_correctly():
 
     with pytest.raises(ValueError, match="label"):
         preprocess_and_split(data)
-
-    assert subsets["lung"]["tissue"].tolist() == [
-        "Lung - Non-small cell carcinoma",
-        "Lung - Adenocarcinoma",
-        "Lung",
-    ]
