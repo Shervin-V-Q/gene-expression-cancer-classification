@@ -4,12 +4,14 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import pandas as pd
+import pytest
 
 from data_preparation import (
     add_binary_label,
     get_high_count_tissues,
     filter_by_tissues,
     define_subsets,
+    preprocess_and_split,
 )
 
 
@@ -100,6 +102,17 @@ def test_define_subsets_filters_lung_subset_correctly():
     )
 
     subsets = define_subsets(data)
+
+    def test_preprocess_and_split_raises_error_when_label_is_missing():
+    data = pd.DataFrame(
+        {
+            "tissue": ["Lung", "Colon", "Kidney"],
+            "value": [1, 2, 3],
+        }
+    )
+
+    with pytest.raises(ValueError, match="label"):
+        preprocess_and_split(data)
 
     assert subsets["lung"]["tissue"].tolist() == [
         "Lung - Non-small cell carcinoma",
