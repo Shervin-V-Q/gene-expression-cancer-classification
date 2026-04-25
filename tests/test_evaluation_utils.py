@@ -1,4 +1,3 @@
-from evaluation_utils import evaluate_predictions
 import sys
 from pathlib import Path
 
