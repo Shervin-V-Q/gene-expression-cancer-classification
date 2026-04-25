@@ -1,9 +1,8 @@
+from evaluation_utils import evaluate_predictions
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-from evaluation_utils import evaluate_predictions
 
 
 def test_evaluate_predictions_returns_accuracy_and_confusion_matrix():
