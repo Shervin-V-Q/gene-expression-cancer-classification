@@ -3,14 +3,23 @@
 A machine learning project for gene expression based cancer and tissue classification.
 
 ## Project status
-This repository currently contains an exploratory notebook together with an initial refactored Python module for data preparation and a first test suite.
+This repository started from an exploratory notebook and is being gradually reorganized into a cleaner and more reproducible Python project.
 
-## Repository contents
-- `exploratory_gene_expression_analysis.ipynb`: exploratory notebook version of the project
-- `data_preparation.py`: reusable data preparation utilities
-- `tests/test_data_preparation.py`: initial automated tests for the data preparation module
-- `requirements.txt`: project dependencies
-- `.gitignore`: ignored local and temporary files
+At the current stage, the repository includes:
+- a notebook for exploratory analysis and reporting
+- reusable Python modules for data preparation, evaluation, and classical model utilities
+- automated tests for the extracted modules
+
+## Repository structure
+- `exploratory_gene_expression_analysis.ipynb` — main notebook used for analysis and experimentation
+- `data_preparation.py` — utilities for label creation, tissue filtering, subset definition, and dataset splitting
+- `evaluation_utils.py` — reusable evaluation helpers
+- `classical_models.py` — utility for training and evaluating classical machine learning models
+- `tests/test_data_preparation.py` — tests for data preparation functions
+- `tests/test_evaluation_utils.py` — tests for evaluation utilities
+- `tests/test_classical_models.py` — tests for classical model utilities
+- `requirements.txt` — project dependencies
+- `.gitignore` — ignored local and temporary files
 
 ## Current implemented features
 - Binary label creation for cancer vs normal tissue samples
@@ -18,7 +27,9 @@ This repository currently contains an exploratory notebook together with an init
 - Filtering datasets by selected tissue types
 - Train/validation/test split utility
 - Predefined tissue subsets for lung, colon, and kidney
-- Initial automated tests for core data preparation functions
+- Evaluation with accuracy and confusion matrix
+- Initial utility for training and evaluating classical ML models
+- Automated tests for extracted modules
 
 ## Installation
 Create and activate a virtual environment, then install the dependencies:
