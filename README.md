@@ -38,3 +38,10 @@ Create and activate a virtual environment, then install the dependencies:
 py -m venv .venv
 .venv\Scripts\activate
 py -m pip install -r requirements.txt
+```
+## Running tests
+
+Run the test suite from the project root with:
+
+```bash
+pytest
