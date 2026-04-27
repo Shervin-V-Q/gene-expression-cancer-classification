@@ -15,6 +15,9 @@ At the current stage, the repository includes:
 - `data_preparation.py` — utilities for label creation, tissue filtering, subset definition, and dataset splitting
 - `evaluation_utils.py` — reusable evaluation helpers
 - `classical_models.py` — utility for training and evaluating classical machine learning models
+- `plotting_utils.py` — reusable plotting helper for confusion matrix heatmaps
+- `run_classical_models.py` — runnable example script for the classical model pipeline
+- `tests/test_run_classical_models.py` — test for the runnable classical model script
 - `tests/test_data_preparation.py` — tests for data preparation functions
 - `tests/test_evaluation_utils.py` — tests for evaluation utilities
 - `tests/test_classical_models.py` — tests for classical model utilities
@@ -29,6 +32,7 @@ At the current stage, the repository includes:
 - Predefined tissue subsets for lung, colon, and kidney
 - Evaluation with accuracy and confusion matrix
 - Initial utility for training and evaluating classical ML models
+- Runnable example script for the classical model workflow
 - Automated tests for extracted modules
 
 ## Installation
