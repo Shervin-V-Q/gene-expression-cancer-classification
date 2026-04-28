@@ -58,8 +58,9 @@ A small runnable example is provided in:
 
 ```bash
 run_classical_models.py`
-
+```
 You can run it from the project root with:
 
 ```bash
 py run_classical_models.py
+```
