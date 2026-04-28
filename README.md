@@ -22,6 +22,7 @@ At the current stage, the repository includes:
 - `tests/test_data_preparation.py` — tests for data preparation functions
 - `tests/test_evaluation_utils.py` — tests for evaluation utilities
 - `tests/test_classical_models.py` — tests for classical model utilities
+- `tests/test_plotting_utils.py` — test for the plotting utility
 - `requirements.txt` — project dependencies
 - `.gitignore` — ignored local and temporary files
 
@@ -33,6 +34,7 @@ At the current stage, the repository includes:
 - Predefined tissue subsets for lung, colon, and kidney
 - Evaluation with accuracy and confusion matrix
 - Initial utility for training and evaluating classical ML models
+- Tested plotting utility for confusion matrix heatmaps
 - Runnable example script for the classical model workflow
 - Automated tests for extracted modules
 
