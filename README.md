@@ -7,8 +7,9 @@ This repository started from an exploratory notebook and is being gradually reor
 
 At the current stage, the repository includes:
 - a notebook for exploratory analysis and reporting
-- reusable Python modules for data preparation, evaluation, and classical model utilities
+- reusable Python modules for data preparation, evaluation, classical model utilities, and plotting
 - automated tests for the extracted modules
+- a runnable example script for the classical model workflow
 
 ## Repository structure
 - `exploratory_gene_expression_analysis.ipynb` — main notebook used for analysis and experimentation
