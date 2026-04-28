@@ -56,7 +56,8 @@ pytest
 
 A small runnable example is provided in:
 
-`run_classical_models.py`
+```bash
+run_classical_models.py`
 
 You can run it from the project root with:
 
