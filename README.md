@@ -66,3 +66,31 @@ You can run it from the project root with:
 ```bash
 py run_classical_models.py
 ```
+If `py` does not work on your system, use:
+```bash
+python run_classical_models.py
+```
+
+This script runs a minimal classical classification example and prints:
+
+- predictions
+- accuracy
+- confusion matrix
+- precision
+- recall
+- f1
+
+## Testing status
+
+The extracted modules have been tested locally with pytest.
+
+## Goal
+
+The goal of this project is to analyze gene expression data and build models for tissue and cancer-related classification tasks.
+
+## Ongoing refactoring direction
+
+The long-term goal is to progressively move reusable logic out of the notebook and into separate Python modules, while keeping the notebook as an analysis and presentation layer.
+
+
+
