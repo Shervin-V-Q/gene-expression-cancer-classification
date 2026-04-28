@@ -50,6 +50,7 @@ Run the test suite from the project root with:
 
 ```bash
 pytest
+```
 
 ## Running the classical model example
 
