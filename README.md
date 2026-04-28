@@ -50,3 +50,14 @@ Run the test suite from the project root with:
 
 ```bash
 pytest
+
+## Running the classical model example
+
+A small runnable example is provided in:
+
+`run_classical_models.py`
+
+You can run it from the project root with:
+
+```bash
+py run_classical_models.py
