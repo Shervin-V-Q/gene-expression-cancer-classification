@@ -1,16 +1,11 @@
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
 import pandas as pd
 import pytest
 
-from data_preparation import (
+from gene_expression_cancer_classification.data_preparation import (
     add_binary_label,
-    get_high_count_tissues,
-    filter_by_tissues,
     define_subsets,
+    filter_by_tissues,
+    get_high_count_tissues,
     preprocess_and_split,
 )
 
@@ -31,6 +26,21 @@ def test_add_binary_label_creates_label_column():
 
     assert "label" in result.columns
     assert result["label"].tolist() == [1, 0, 1, 0]
+
+
+def test_add_binary_label_does_not_modify_input_dataframe():
+    data = pd.DataFrame({"tissue": ["Lung - Adenocarcinoma", "Lung"]})
+
+    add_binary_label(data)
+
+    assert "label" not in data.columns
+
+
+def test_add_binary_label_raises_error_when_tissue_column_is_missing():
+    data = pd.DataFrame({"wrong_column": ["Lung - Adenocarcinoma"]})
+
+    with pytest.raises(ValueError, match="tissue"):
+        add_binary_label(data)
 
 
 def test_get_high_count_tissues_returns_expected_tissues():
