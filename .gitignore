@@ -1,5 +1,30 @@
-.venv/
+# Python cache files
 __pycache__/
+*.py[cod]
+
+# Pytest cache
 .pytest_cache/
+
+# Virtual environments
+.venv/
+.venv_test/
+venv/
+env/
+
+# Build and package metadata
+build/
+dist/
+*.egg-info/
+
+# Jupyter notebook checkpoints
 .ipynb_checkpoints/
-*.pyc
+
+# Large or generated data files
+data/
+results/
+models/
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
