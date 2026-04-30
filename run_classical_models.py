@@ -1,6 +1,6 @@
 from sklearn.linear_model import LogisticRegression
 
-from classical_models import train_and_evaluate_classical_model
+from gene_expression_cancer_classification.models import train_and_evaluate_classical_model
 
 
 def main():
