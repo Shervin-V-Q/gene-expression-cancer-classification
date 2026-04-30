@@ -1,12 +1,7 @@
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
 import matplotlib.pyplot as plt
 import numpy as np
 
-from plotting_utils import plot_heatmap
+from gene_expression_cancer_classification.plotting import plot_heatmap
 
 
 def test_plot_heatmap_sets_labels_and_title():
