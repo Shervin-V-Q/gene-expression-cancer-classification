@@ -1,72 +1,127 @@
-# gene-expression-cancer-classification
+# Gene Expression Cancer Classification
 
-A machine learning project for gene expression based cancer and tissue classification.
+A small scientific Python project for gene expression based cancer classification.
 
-## Project status
-This repository started from an exploratory notebook and is being gradually reorganized into a cleaner and more reproducible Python project.
+This repository started from an exploratory notebook and is being gradually reorganized into a cleaner, testable, and reproducible Python project.
+
+## Project goal
+
+The goal of this project is to build and test a small machine learning workflow for classifying cancer-related and normal tissue samples from gene expression data.
+
+The project is educational and exploratory. It is not intended to be used as a clinical diagnostic tool.
+
+## Current project status
 
 At the current stage, the repository includes:
-- a notebook for exploratory analysis and reporting
-- reusable Python modules for data preparation, evaluation, classical model utilities, and plotting
+
+- an exploratory notebook for analysis and reporting
+- an installable Python package under `src/`
+- reusable modules for data preparation, evaluation, model training, and plotting
 - automated tests for the extracted modules
-- a runnable example script for the classical model workflow
+- a small runnable example script for the classical model workflow
+- project configuration with `pyproject.toml`
 
 ## Repository structure
-- `exploratory_gene_expression_analysis.ipynb` — main notebook used for analysis and experimentation
-- `data_preparation.py` — utilities for label creation, tissue filtering, subset definition, and dataset splitting
-- `evaluation_utils.py` — reusable evaluation helpers
-- `classical_models.py` — utility for training and evaluating classical machine learning models
-- `plotting_utils.py` — reusable plotting helper for confusion matrix heatmaps
-- `run_classical_models.py` — runnable example script for the classical model pipeline
-- `tests/test_run_classical_models.py` — test for the runnable classical model script
-- `tests/test_data_preparation.py` — tests for data preparation functions
-- `tests/test_evaluation_utils.py` — tests for evaluation utilities
-- `tests/test_classical_models.py` — tests for classical model utilities
-- `tests/test_plotting_utils.py` — test for the plotting utility
-- `requirements.txt` — project dependencies
-- `.gitignore` — ignored local and temporary files
 
-## Current implemented features
+```text
+gene-expression-cancer-classification/
+├── exploratory_gene_expression_analysis.ipynb
+├── pyproject.toml
+├── requirements.txt
+├── run_classical_models.py
+├── src/
+│   └── gene_expression_cancer_classification/
+│       ├── __init__.py
+│       ├── data_preparation.py
+│       ├── evaluation.py
+│       ├── models.py
+│       └── plotting.py
+└── tests/
+    ├── test_classical_models.py
+    ├── test_data_preparation.py
+    ├── test_evaluation_utils.py
+    ├── test_plotting_utils.py
+    └── test_run_classical_models.py
+```
+
+## Main modules
+
+- `data_preparation.py` — utilities for binary label creation, tissue filtering, subset definition, and train/validation/test splitting
+- `evaluation.py` — reusable evaluation helpers
+- `models.py` — utilities for training and evaluating classical machine learning models
+- `plotting.py` — plotting helper for confusion matrix heatmaps
+- `run_classical_models.py` — small runnable example script
+
+## Implemented features
+
 - Binary label creation for cancer vs normal tissue samples
+- Rule-based cancer label inference from tissue annotations
 - Selection of high-count tissue categories
 - Filtering datasets by selected tissue types
-- Train/validation/test split utility
+- Train/validation/test split with stratification
 - Predefined tissue subsets for lung, colon, and kidney
 - Evaluation with accuracy and confusion matrix
-- Initial utility for training and evaluating classical ML models
+- Classical model evaluation with precision, recall, and F1 score
 - Tested plotting utility for confusion matrix heatmaps
-- Runnable example script for the classical model workflow
-- Automated tests for extracted modules
+- Automated tests with `pytest`
+
+## Important limitation
+
+The binary cancer label is inferred from text in the `tissue` annotation.
+
+A sample is labeled as cancer when its tissue annotation contains one of the configured cancer-related keywords, such as `carcinoma` or `adenocarcinoma`.
+
+This is a rule-based labeling step and should not be interpreted as an independent clinical diagnosis.
 
 ## Installation
-Create and activate a virtual environment, then install the dependencies:
+
+From the project root, create and activate a virtual environment.
+
+On Windows:
 
 ```bash
 py -m venv .venv
 .venv\Scripts\activate
 py -m pip install -r requirements.txt
 ```
+
+On macOS or Linux:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+The `requirements.txt` file installs the project in editable mode using the configuration in `pyproject.toml`.
+
 ## Running tests
 
 Run the test suite from the project root with:
 
 ```bash
-pytest
+python -m pytest
 ```
+
+The current local test suite contains tests for:
+
+- data preparation utilities
+- label creation and input validation
+- evaluation utilities
+- classical model training and evaluation
+- plotting utilities
+- the runnable example script
 
 ## Running the classical model example
 
 A small runnable example is provided in:
 
-```bash
+```text
 run_classical_models.py
 ```
-You can run it from the project root with:
 
-```bash
-py run_classical_models.py
-```
-If `py` does not work on your system, use:
+Run it from the project root with:
+
 ```bash
 python run_classical_models.py
 ```
@@ -78,19 +133,22 @@ This script runs a minimal classical classification example and prints:
 - confusion matrix
 - precision
 - recall
-- f1
+- F1 score
 
-## Testing status
+## Notebook
 
-The extracted modules have been tested locally with pytest.
+The notebook `exploratory_gene_expression_analysis.ipynb` is kept as an exploratory analysis and reporting layer.
 
-## Goal
+Reusable code should live in the Python package under `src/gene_expression_cancer_classification/`, not inside the notebook.
 
-The goal of this project is to analyze gene expression data and build models for tissue and cancer-related classification tasks.
+## Development notes
 
-## Ongoing refactoring direction
+This project follows a gradual refactoring process:
 
-The long-term goal is to progressively move reusable logic out of the notebook and into separate Python modules, while keeping the notebook as an analysis and presentation layer.
+1. start from exploratory analysis,
+2. move reusable logic into Python modules,
+3. add tests for the extracted functionality,
+4. make the project installable,
+5. document usage and limitations clearly.
 
-
-
+This structure is intended to make the project easier to test, reproduce, and extend.
