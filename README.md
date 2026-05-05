@@ -44,6 +44,14 @@ gene-expression-cancer-classification/
     └── test_run_classical_models.py
 ```
 
+## Documentation
+
+Additional documentation is available in the `docs/` directory:
+
+- [`docs/dataset.md`](docs/dataset.md) — dataset availability, expected local data placement, and label creation
+- [`docs/usage.md`](docs/usage.md) — installation, testing, and example usage
+- [`docs/methods.md`](docs/methods.md) — methodological choices, evaluation metrics, and reproducibility notes
+
 ## Main modules
 
 - `data_preparation.py` — utilities for binary label creation, tissue filtering, subset definition, and train/validation/test splitting
