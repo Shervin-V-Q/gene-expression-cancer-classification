@@ -72,7 +72,10 @@ The binary cancer label is inferred from text in the `tissue` annotation.
 A sample is labeled as cancer when its tissue annotation contains one of the configured cancer-related keywords, such as `carcinoma` or `adenocarcinoma`.
 
 This is a rule-based labeling step and should not be interpreted as an independent clinical diagnosis.
+
 More details about data availability, expected local data placement, and label creation are provided in [`docs/dataset.md`](docs/dataset.md).
+
+A summary of the current methodological choices is available in [`docs/methods.md`](docs/methods.md).
 
 ## Installation
 
