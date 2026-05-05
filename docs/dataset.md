@@ -6,11 +6,20 @@ This project was developed around a gene expression dataset used for exploratory
 
 The full dataset is not included in this repository.
 
+The dataset used during development is publicly available on Zenodo:
+
+- Dataset: `Subset of TCGA & GTEx`
+- File name: `gtex_with_cancer.csv.gz`
+- DOI: `10.5281/zenodo.7828660`
+- Expected local path: `data/gtex_with_cancer.csv.gz`
+
 This is intentional because gene expression datasets can be large and should not be stored directly in the GitHub repository unless they are small, public, and clearly licensed for redistribution.
 
 ## Expected data location
 
 If a user wants to reproduce the full analysis, the dataset should be downloaded separately and placed in a local `data/` directory.
+
+After downloading the file from Zenodo, place it in the local `data/` directory without changing the file name.
 
 Example local structure:
 
