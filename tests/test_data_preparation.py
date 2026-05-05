@@ -120,7 +120,6 @@ def test_define_subsets_filters_lung_subset_correctly():
     ]
 
 
-
 def test_preprocess_and_split_raises_error_when_label_is_missing():
     data = pd.DataFrame(
         {
