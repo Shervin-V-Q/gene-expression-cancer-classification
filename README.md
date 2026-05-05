@@ -104,6 +104,8 @@ Run the test suite from the project root with:
 python -m pytest
 ```
 
+Additional installation and usage instructions are available in [`docs/usage.md`](docs/usage.md).
+
 The current local test suite contains tests for:
 
 - data preparation utilities
