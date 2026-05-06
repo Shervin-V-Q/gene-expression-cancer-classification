@@ -65,7 +65,25 @@ The command trains a minimal logistic regression model on a tiny artificial data
 - recall
 - F1 score
 
-## 5. Notes
+## 5. Run the toy gene expression workflow
+
+The repository includes a small toy gene expression dataset:
+
+```text
+examples/toy_gene_expression.csv
+```
+
+This toy dataset is intentionally small and is used only to demonstrate the package workflow without requiring the full external dataset. It is not intended for biological or clinical conclusions.
+
+Run the toy workflow with:
+
+```bash
+gene-cancer-classify train-example
+```
+
+This command loads the toy CSV file, creates binary labels from the tissue annotation, uses columns starting with `gene_` as features, trains a logistic regression model, and prints evaluation metrics.
+
+## 6. Notes
 
 The automated tests do not require the full gene expression dataset.
 
