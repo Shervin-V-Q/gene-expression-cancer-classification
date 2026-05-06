@@ -21,6 +21,9 @@ dev = [
     "pytest",
 ]
 
+[project.scripts]
+gene-cancer-classify = "gene_expression_cancer_classification.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
