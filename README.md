@@ -137,6 +137,12 @@ run_classical_models.py
 Run it from the project root with:
 
 ```bash
+gene-cancer-classify example
+```
+
+For compatibility, the example script can also be run with:
+
+```bash
 python run_classical_models.py
 ```
 
