@@ -14,3 +14,18 @@ def test_cli_example_runs_without_error(monkeypatch, capsys):
     assert "Precision:" in captured.out
     assert "Recall:" in captured.out
     assert "F1:" in captured.out
+
+
+def test_cli_train_example_runs_without_error(monkeypatch, capsys):
+    monkeypatch.setattr("sys.argv", ["gene-cancer-classify", "train-example"])
+
+    main()
+
+    captured = capsys.readouterr()
+
+    assert "Input file:" in captured.out
+    assert "Number of samples:" in captured.out
+    assert "Feature columns:" in captured.out
+    assert "Accuracy:" in captured.out
+    assert "Confusion matrix:" in captured.out
+    assert "F1:" in captured.out
