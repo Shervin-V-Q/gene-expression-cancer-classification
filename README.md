@@ -19,12 +19,19 @@ At the current stage, the repository includes:
 - reusable modules for data preparation, evaluation, model training, and plotting
 - automated tests for the extracted modules
 - a small runnable example script for the classical model workflow
+- a small toy gene expression CSV example for demonstrating the package workflow
 - project configuration with `pyproject.toml`
 
 ## Repository structure
 
 ```text
 gene-expression-cancer-classification/
+├── docs/
+│   ├── dataset.md
+│   ├── methods.md
+│   └── usage.md
+├── examples/
+│   └── toy_gene_expression.csv
 ├── exploratory_gene_expression_analysis.ipynb
 ├── pyproject.toml
 ├── requirements.txt
@@ -32,12 +39,14 @@ gene-expression-cancer-classification/
 ├── src/
 │   └── gene_expression_cancer_classification/
 │       ├── __init__.py
+│       ├── cli.py
 │       ├── data_preparation.py
 │       ├── evaluation.py
 │       ├── models.py
 │       └── plotting.py
 └── tests/
     ├── test_classical_models.py
+    ├── test_cli.py
     ├── test_data_preparation.py
     ├── test_evaluation_utils.py
     ├── test_plotting_utils.py
@@ -54,6 +63,7 @@ Additional documentation is available in the `docs/` directory:
 
 ## Main modules
 
+- `cli.py` — command-line interface for running reproducible example workflows
 - `data_preparation.py` — utilities for binary label creation, tissue filtering, subset definition, and train/validation/test splitting
 - `evaluation.py` — reusable evaluation helpers
 - `models.py` — utilities for training and evaluating classical machine learning models
@@ -154,6 +164,30 @@ This script runs a minimal classical classification example and prints:
 - precision
 - recall
 - F1 score
+
+## Running the toy gene expression example
+
+A small toy gene expression dataset is provided in:
+
+```text
+examples/toy_gene_expression.csv
+```
+
+This file is intentionally small and is used only to demonstrate the package workflow without requiring the full external dataset. It is not intended for biological or clinical conclusions.
+
+Run the toy workflow with:
+
+```bash
+gene-cancer-classify train-example
+```
+
+This command:
+
+- loads the toy CSV file
+- creates binary labels from the tissue annotation
+- uses columns starting with `gene_` as features
+- trains a logistic regression model
+- prints evaluation metrics
 
 ## Notebook
 
