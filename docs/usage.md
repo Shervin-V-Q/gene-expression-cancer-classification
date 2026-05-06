@@ -44,19 +44,19 @@ A successful run should report all tests as passed.
 
 ## 4. Run the classical model example
 
-A small example script is provided at:
+A small example command is provided after installing the project:
 
-```text
-run_classical_models.py
+```bash
+gene-cancer-classify example
 ```
 
-Run it with:
+For compatibility, the example script can also be run with:
 
 ```bash
 python run_classical_models.py
 ```
 
-The script trains a minimal logistic regression model on a tiny artificial dataset and prints:
+The command trains a minimal logistic regression model on a tiny artificial dataset and prints:
 
 - predictions
 - accuracy
