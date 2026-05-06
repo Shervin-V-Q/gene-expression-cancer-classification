@@ -1,0 +1,13 @@
+sample_id,tissue,gene_1,gene_2,gene_3,gene_4
+s1,Lung,0.10,0.20,0.15,0.30
+s2,Lung,0.20,0.10,0.25,0.20
+s3,Colon,0.15,0.25,0.10,0.35
+s4,Kidney,0.30,0.20,0.20,0.10
+s5,Lung - Adenocarcinoma,2.10,2.30,2.20,2.40
+s6,Lung - Adenocarcinoma,2.20,2.10,2.35,2.25
+s7,Colon - Adenocarcinoma,2.40,2.20,2.30,2.10
+s8,Kidney - Clear cell renal cell carcinoma,2.30,2.40,2.10,2.20
+s9,Lung,0.12,0.22,0.18,0.28
+s10,Colon,0.18,0.21,0.14,0.32
+s11,Lung - Adenocarcinoma,2.15,2.25,2.18,2.35
+s12,Colon - Adenocarcinoma,2.35,2.28,2.26,2.12
