@@ -34,6 +34,20 @@ gene-expression-cancer-classification/
 
 The `data/` directory is ignored by Git and should remain local.
 
+## Toy dataset included in the repository
+
+A very small artificial toy dataset is included at:
+
+```text
+examples/toy_gene_expression.csv
+```
+
+This file is not intended for biological or clinical conclusions.
+
+It is only used to demonstrate the package workflow and to make the project runnable without downloading the full external dataset.
+
+The full analysis still requires the external dataset described above.
+
 ## Label creation
 
 The current binary cancer label is inferred from the `tissue` annotation.
