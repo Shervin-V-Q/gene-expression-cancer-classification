@@ -63,6 +63,10 @@ These metrics are useful for a first classification workflow.
 
 However, for imbalanced biological datasets, accuracy alone may be misleading. Precision, recall, F1 score, and the confusion matrix should also be inspected.
 
+The evaluation helper uses a fixed binary label order `[0, 1]` for the confusion matrix, where `0` represents normal samples and `1` represents cancer-labeled samples.
+
+Undefined precision, recall, or F1 cases are handled with `zero_division=0`. This avoids warnings when a model does not predict any positive samples and makes the metric behavior explicit and testable.
+
 ## 5. Classical model example
 
 The current runnable script uses a small artificial example with logistic regression.
