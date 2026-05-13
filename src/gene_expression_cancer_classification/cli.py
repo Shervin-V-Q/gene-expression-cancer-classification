@@ -12,7 +12,20 @@ from gene_expression_cancer_classification.models import (
 
 
 def run_example() -> None:
-    """Run a small reproducible classical model example."""
+    """
+    Run a minimal classical machine-learning example.
+
+    Returns
+    -------
+    None
+        The function prints predictions and evaluation metrics to the terminal.
+
+    Notes
+    -----
+    This example uses a tiny artificial dataset. Its purpose is to demonstrate
+    that the package can train a model, generate predictions, and report
+    evaluation metrics.
+    """
     x_train = [[0], [1], [2], [3]]
     y_train = [0, 0, 1, 1]
 
@@ -38,7 +51,33 @@ def run_example() -> None:
 
 
 def run_train_example() -> None:
-    """Run a small CSV-based gene expression classification example."""
+    """
+    Run the toy gene expression classification workflow.
+
+    Returns
+    -------
+    None
+        The function prints dataset information, predictions, and evaluation
+        metrics to the terminal.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the toy dataset cannot be found at
+        ``examples/toy_gene_expression.csv``.
+    ValueError
+        If no columns starting with ``gene_`` are found.
+
+    Notes
+    -----
+    This command reads the small toy CSV file included in the repository,
+    creates rule-based binary labels from the ``tissue`` annotation, uses
+    columns starting with ``gene_`` as features, trains a logistic regression
+    model, and prints evaluation metrics.
+
+    The toy dataset is intended only to demonstrate the package workflow and
+    should not be used for biological or clinical conclusions.
+    """
     input_path = Path("examples/toy_gene_expression.csv")
 
     if not input_path.exists():
@@ -93,7 +132,22 @@ def run_train_example() -> None:
 
 
 def main() -> None:
-    """Command-line interface for the project."""
+    """
+    Run the command-line interface.
+
+    Returns
+    -------
+    None
+        The selected command is executed and results are printed to the
+        terminal.
+
+    Notes
+    -----
+    Available commands are:
+
+    - ``example``: run a minimal artificial classification example
+    - ``train-example``: run the toy gene expression CSV workflow
+    """
     parser = argparse.ArgumentParser(
         description="Gene expression cancer classification tools."
     )
