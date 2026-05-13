@@ -1,26 +1,23 @@
 # Gene Expression Cancer Classification
 
-A small scientific Python project for gene expression based cancer classification.
+A Python project for gene-expression-based cancer classification.
 
-This repository started from an exploratory notebook and is being gradually reorganized into a cleaner, testable, and reproducible Python project.
-
-## Project goal
-
-The goal of this project is to build and test a small machine learning workflow for classifying cancer-related and normal tissue samples from gene expression data.
+This repository provides a reproducible educational workflow for preparing gene expression data, creating rule-based binary cancer labels from tissue annotations, training simple classical machine-learning models, and evaluating classification performance.
 
 The project is educational and exploratory. It is not intended to be used as a clinical diagnostic tool.
 
-## Current project status
+## Project features
 
-At the current stage, the repository includes:
+The repository includes:
 
 - an exploratory notebook for analysis and reporting
 - an installable Python package under `src/`
-- reusable modules for data preparation, evaluation, model training, and plotting
-- automated tests for the extracted modules
-- a small runnable example script for the classical model workflow
+- reusable modules for data preparation, evaluation, model training, plotting, and command-line execution
+- automated tests with `pytest`
+- a command-line interface for running reproducible example workflows
 - a small toy gene expression CSV example for demonstrating the package workflow
 - project configuration with `pyproject.toml`
+- additional documentation in the `docs/` directory
 
 ## Repository structure
 
@@ -57,8 +54,8 @@ gene-expression-cancer-classification/
 
 Additional documentation is available in the `docs/` directory:
 
-- [`docs/dataset.md`](docs/dataset.md) — dataset availability, expected local data placement, and label creation
-- [`docs/usage.md`](docs/usage.md) — installation, testing, and example usage
+- [`docs/dataset.md`](docs/dataset.md) — dataset availability, expected local data placement, toy dataset information, and label creation
+- [`docs/usage.md`](docs/usage.md) — installation, testing, and command-line usage
 - [`docs/methods.md`](docs/methods.md) — methodological choices, evaluation metrics, and reproducibility notes
 
 ## Main modules
@@ -66,34 +63,15 @@ Additional documentation is available in the `docs/` directory:
 - `cli.py` — command-line interface for running reproducible example workflows
 - `data_preparation.py` — utilities for binary label creation, tissue filtering, subset definition, and train/validation/test splitting
 - `evaluation.py` — reusable evaluation helpers
-- `models.py` — utilities for training and evaluating classical machine learning models
+- `models.py` — utilities for training and evaluating classical machine-learning models
 - `plotting.py` — plotting helper for confusion matrix heatmaps
-- `run_classical_models.py` — small runnable example script
-
-## Implemented features
-
-- Binary label creation for cancer vs normal tissue samples
-- Rule-based cancer label inference from tissue annotations
-- Selection of high-count tissue categories
-- Filtering datasets by selected tissue types
-- Train/validation/test split with stratification
-- Predefined tissue subsets for lung, colon, and kidney
-- Evaluation with accuracy and confusion matrix
-- Classical model evaluation with precision, recall, and F1 score
-- Tested plotting utility for confusion matrix heatmaps
-- Automated tests with `pytest`
+- `run_classical_models.py` — compatibility script for running the small classical model example
 
 ## Important limitation
 
-The binary cancer label is inferred from text in the `tissue` annotation.
+The binary cancer label is inferred from text in the `tissue` annotation. A sample is labeled as cancer when its tissue annotation contains one of the configured cancer-related keywords, such as `carcinoma` or `adenocarcinoma`.
 
-A sample is labeled as cancer when its tissue annotation contains one of the configured cancer-related keywords, such as `carcinoma` or `adenocarcinoma`.
-
-This is a rule-based labeling step and should not be interpreted as an independent clinical diagnosis.
-
-More details about data availability, expected local data placement, and label creation are provided in [`docs/dataset.md`](docs/dataset.md).
-
-A summary of the current methodological choices is available in [`docs/methods.md`](docs/methods.md).
+This rule-based labeling step should not be interpreted as an independent clinical diagnosis. More details are provided in [`docs/dataset.md`](docs/dataset.md) and [`docs/methods.md`](docs/methods.md).
 
 ## Installation
 
@@ -125,26 +103,11 @@ Run the test suite from the project root with:
 python -m pytest
 ```
 
-Additional installation and usage instructions are available in [`docs/usage.md`](docs/usage.md).
-
-The current local test suite contains tests for:
-
-- data preparation utilities
-- label creation and input validation
-- evaluation utilities
-- classical model training and evaluation
-- plotting utilities
-- the runnable example script
+The automated tests use small artificial examples and do not require the full external gene expression dataset.
 
 ## Running the classical model example
 
-A small runnable example is provided in:
-
-```text
-run_classical_models.py
-```
-
-Run it from the project root with:
+Run the small classical model example with:
 
 ```bash
 gene-cancer-classify example
@@ -156,7 +119,7 @@ For compatibility, the example script can also be run with:
 python run_classical_models.py
 ```
 
-This script runs a minimal classical classification example and prints:
+This example trains a minimal logistic regression model on a tiny artificial dataset and prints:
 
 - predictions
 - accuracy
@@ -193,16 +156,4 @@ This command:
 
 The notebook `exploratory_gene_expression_analysis.ipynb` is kept as an exploratory analysis and reporting layer.
 
-Reusable code should live in the Python package under `src/gene_expression_cancer_classification/`, not inside the notebook.
-
-## Development notes
-
-This project follows a gradual refactoring process:
-
-1. start from exploratory analysis,
-2. move reusable logic into Python modules,
-3. add tests for the extracted functionality,
-4. make the project installable,
-5. document usage and limitations clearly.
-
-This structure is intended to make the project easier to test, reproduce, and extend.
+Reusable code is stored in the Python package under `src/gene_expression_cancer_classification/`.
