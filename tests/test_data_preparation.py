@@ -11,6 +11,10 @@ from gene_expression_cancer_classification.data_preparation import (
 
 
 def test_add_binary_label_creates_label_column():
+    """
+    Test that rule-based label inference creates the expected binary
+    cancer labels from tissue annotations.
+    """
     data = pd.DataFrame(
         {
             "tissue": [
@@ -29,6 +33,10 @@ def test_add_binary_label_creates_label_column():
 
 
 def test_add_binary_label_does_not_modify_input_dataframe():
+    """
+    Test that label creation returns a copy and does not modify
+    the input dataframe in place.
+    """
     data = pd.DataFrame({"tissue": ["Lung - Adenocarcinoma", "Lung"]})
 
     add_binary_label(data)
@@ -37,6 +45,10 @@ def test_add_binary_label_does_not_modify_input_dataframe():
 
 
 def test_add_binary_label_raises_error_when_tissue_column_is_missing():
+    """
+    Test that label creation raises a clear error when the tissue
+    annotation column is missing.
+    """
     data = pd.DataFrame({"wrong_column": ["Lung - Adenocarcinoma"]})
 
     with pytest.raises(ValueError, match="tissue"):
@@ -44,6 +56,10 @@ def test_add_binary_label_raises_error_when_tissue_column_is_missing():
 
 
 def test_get_high_count_tissues_returns_expected_tissues():
+    """
+    Test that tissue categories meeting the minimum count threshold
+    are returned in frequency order.
+    """
     data = pd.DataFrame(
         {
             "tissue": [
@@ -63,6 +79,10 @@ def test_get_high_count_tissues_returns_expected_tissues():
 
 
 def test_filter_by_tissues_keeps_only_requested_tissues():
+    """
+    Test that filtering keeps only rows whose tissue annotation is
+    included in the requested tissue list.
+    """
     data = pd.DataFrame(
         {
             "tissue": ["Lung", "Colon", "Kidney", "Lung"],
@@ -77,6 +97,10 @@ def test_filter_by_tissues_keeps_only_requested_tissues():
 
 
 def test_define_subsets_returns_expected_keys():
+    """
+    Test that predefined exploratory tissue subsets are returned
+    with the expected dictionary keys.
+    """
     data = pd.DataFrame(
         {
             "tissue": [
@@ -99,6 +123,10 @@ def test_define_subsets_returns_expected_keys():
 
 
 def test_define_subsets_filters_lung_subset_correctly():
+    """
+    Test that the predefined lung subset keeps the expected lung-related
+    normal and cancer tissue annotations.
+    """
     data = pd.DataFrame(
         {
             "tissue": [
@@ -121,6 +149,10 @@ def test_define_subsets_filters_lung_subset_correctly():
 
 
 def test_preprocess_and_split_raises_error_when_label_is_missing():
+    """
+    Test that preprocessing raises a clear error when the binary label
+    column is missing.
+    """
     data = pd.DataFrame(
         {
             "tissue": ["Lung", "Colon", "Kidney"],
