@@ -2,6 +2,10 @@ from run_classical_models import main
 
 
 def test_run_classical_models_main_runs_without_error(capsys):
+    """
+    Test that the compatibility example script runs and prints the main
+    evaluation outputs.
+    """
     main()
     captured = capsys.readouterr()
 
