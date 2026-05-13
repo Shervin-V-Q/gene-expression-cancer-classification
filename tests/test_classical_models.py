@@ -4,6 +4,10 @@ from gene_expression_cancer_classification.models import train_and_evaluate_clas
 
 
 def test_train_and_evaluate_classical_model_returns_expected_keys():
+    """
+    Test that classical model evaluation returns predictions and
+    the main evaluation metrics.
+    """
     x_train = [[0], [1], [2], [3]]
     y_train = [0, 0, 1, 1]
 
@@ -21,6 +25,9 @@ def test_train_and_evaluate_classical_model_returns_expected_keys():
 
 
 def test_train_and_evaluate_classical_model_returns_prediction_for_each_test_sample():
+    """
+    Test that the model helper returns one prediction for each test sample.
+    """
     x_train = [[0], [1], [2], [3]]
     y_train = [0, 0, 1, 1]
 
@@ -36,6 +43,10 @@ def test_train_and_evaluate_classical_model_returns_prediction_for_each_test_sam
 
 
 def test_train_and_evaluate_classical_model_returns_extended_metrics():
+    """
+    Test that precision, recall, and F1 score are included in the
+    classical model evaluation output.
+    """
     x_train = [[0], [1], [2], [3]]
     y_train = [0, 0, 1, 1]
 
