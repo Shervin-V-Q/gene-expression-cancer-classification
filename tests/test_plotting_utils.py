@@ -5,6 +5,10 @@ from gene_expression_cancer_classification.plotting import plot_heatmap
 
 
 def test_plot_heatmap_sets_labels_and_title():
+    """
+    Test that the confusion matrix plotting helper sets the expected
+    axis labels and title.
+    """
     cm = np.array([[5, 1], [2, 4]])
     class_names = ["normal", "cancer"]
 
