@@ -11,23 +11,32 @@ def evaluate_predictions(y_true, y_pred):
     """
     Evaluate binary classification predictions.
 
-    Label convention:
-    - 0: normal
-    - 1: cancer
+    Parameters
+    ----------
+    y_true
+        True binary labels using the convention ``0`` = normal and
+        ``1`` = cancer-labeled sample.
+    y_pred
+        Predicted binary labels using the same label convention.
 
     Returns
     -------
     dict
-        Dictionary containing accuracy, confusion matrix, precision,
-        recall, and F1 score.
+        Dictionary containing the following evaluation outputs:
+
+        - ``accuracy``: fraction of correctly classified samples
+        - ``confusion_matrix``: 2x2 confusion matrix with label order ``[0, 1]``
+        - ``precision``: positive-class precision
+        - ``recall``: positive-class recall
+        - ``f1``: positive-class F1 score
 
     Notes
     -----
-    The confusion matrix is always computed with labels [0, 1],
-    so the returned matrix is always 2x2 even if one class is missing
-    from the predictions.
+    The confusion matrix is always computed with labels ``[0, 1]``, so the
+    returned matrix remains 2x2 even if one class is missing from the
+    predictions.
 
-    The zero_division=0 setting avoids undefined metric warnings when
+    The ``zero_division=0`` setting avoids undefined metric warnings when
     the model does not predict any positive samples.
     """
     results = {
