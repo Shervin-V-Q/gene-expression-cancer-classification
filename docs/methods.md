@@ -1,10 +1,21 @@
 # Methods
 
-This document summarizes the current methodological choices used in the project.
+This document summarizes the methodological choices used in the project.
 
-## 1. Label inference
+## 1. Input table validation
 
-The project currently uses a binary cancer-vs-normal label.
+The toy gene expression workflow expects a table with:
+
+- a `tissue` column containing tissue annotations
+- one or more gene-expression feature columns starting with `gene_`
+
+The function `validate_gene_expression_table` checks these minimum structural requirements before the toy workflow continues.
+
+This validation step is intentionally lightweight. It is designed to make the example workflow clearer and more testable without assuming that every possible external gene expression dataset has the same full structure.
+
+## 2. Label inference
+
+The project uses a binary cancer-vs-normal label.
 
 The label is inferred from the text stored in the `tissue` annotation.
 
@@ -21,7 +32,7 @@ This rule is implemented in:
 src/gene_expression_cancer_classification/data_preparation.py
 ```
 
-## 2. Important limitation of the labels
+## 3. Important limitation of the labels
 
 The binary label is rule-based.
 
@@ -29,7 +40,27 @@ It should not be interpreted as an independent clinical diagnosis.
 
 This means that the model is learning from labels inferred from text annotations, not from a separate clinical gold standard.
 
-## 3. Data splitting
+## 4. Feature selection
+
+Gene-expression features are selected by column name.
+
+The helper `select_gene_feature_columns` returns columns whose names start with:
+
+```text
+gene_
+```
+
+This keeps the toy workflow explicit and reproducible. Metadata columns such as `sample_id` or `tissue` are not used as model input features.
+
+The helper `create_feature_label_data` separates the selected gene-expression feature columns from the binary `label` column.
+
+## 5. Class balance
+
+The helper `summarize_class_balance` reports how many samples are available for each binary label.
+
+This is useful because accuracy can be misleading when classes are imbalanced. Reporting class balance makes the toy workflow more transparent before model training.
+
+## 6. Data splitting
 
 The function `preprocess_and_split` splits a labeled dataset into:
 
@@ -49,7 +80,7 @@ The default random seed is:
 
 Using a fixed random seed helps make the split reproducible.
 
-## 4. Evaluation metrics
+## 7. Evaluation metrics
 
 The current evaluation utilities report:
 
@@ -59,7 +90,7 @@ The current evaluation utilities report:
 - recall
 - F1 score
 
-These metrics are useful for a first classification workflow.
+These metrics are useful for a first binary classification workflow.
 
 However, for imbalanced biological datasets, accuracy alone may be misleading. Precision, recall, F1 score, and the confusion matrix should also be inspected.
 
@@ -67,15 +98,23 @@ The evaluation helper uses a fixed binary label order `[0, 1]` for the confusion
 
 Undefined precision, recall, or F1 cases are handled with `zero_division=0`. This avoids warnings when a model does not predict any positive samples and makes the metric behavior explicit and testable.
 
-## 5. Classical model example
+## 8. Classical model example
 
-The current runnable script uses a small artificial example with logistic regression.
+The current runnable example uses logistic regression.
 
-The purpose of this script is not to provide a final biological model.
+The purpose of this example is not to provide a final biological model.
 
-Its purpose is to demonstrate that the package can be imported, a model can be trained, predictions can be generated, and evaluation metrics can be printed.
+Its purpose is to demonstrate that the package can:
 
-## 6. Automated tests
+- validate a small gene expression table
+- create rule-based labels
+- select gene-expression feature columns
+- report class balance
+- train a classical model
+- generate predictions
+- print evaluation metrics
+
+## 9. Automated tests
 
 The automated tests use small artificial datasets.
 
@@ -85,5 +124,7 @@ This keeps the tests:
 - deterministic
 - independent of large external data files
 - easy to run on any machine
+
+The tests check both normal behaviour and error cases, including missing required columns, missing gene feature columns, single-class labels, exact metric values, command-line behaviour, and plotting output.
 
 The full gene expression dataset is therefore not required to run the test suite.
