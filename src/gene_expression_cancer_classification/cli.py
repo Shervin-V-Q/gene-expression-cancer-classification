@@ -12,6 +12,8 @@ from gene_expression_cancer_classification.data_preparation import (
     validate_gene_expression_table,
 )
 from gene_expression_cancer_classification.models import (
+    build_default_classical_models,
+    compare_classical_models,
     train_and_evaluate_classical_model,
 )
 
@@ -62,8 +64,8 @@ def run_train_example() -> None:
     Returns
     -------
     None
-        The function prints dataset information, class balance, predictions,
-        and evaluation metrics to the terminal.
+        The function prints dataset information, class balance, single-model
+        metrics, and a simple model comparison table to the terminal.
 
     Raises
     ------
@@ -77,8 +79,9 @@ def run_train_example() -> None:
     -----
     This command reads the small toy CSV file included in the repository,
     validates its structure, creates rule-based binary labels from the
-    ``tissue`` annotation, selects gene expression feature columns, trains a
-    logistic regression model, and prints evaluation metrics.
+    ``tissue`` annotation, selects gene expression feature columns, trains
+    a logistic regression model, compares a small set of classical models,
+    and prints evaluation metrics.
 
     The toy dataset is intended only to demonstrate the package workflow and
     should not be used for biological or clinical conclusions.
@@ -106,9 +109,18 @@ def run_train_example() -> None:
         stratify=y,
     )
 
-    model = LogisticRegression()
+    model = LogisticRegression(max_iter=1000)
     results = train_and_evaluate_classical_model(
         model,
+        x_train,
+        y_train,
+        x_test,
+        y_test,
+    )
+
+    default_models = build_default_classical_models(random_state=42)
+    comparison = compare_classical_models(
+        default_models,
         x_train,
         y_train,
         x_test,
@@ -126,6 +138,8 @@ def run_train_example() -> None:
     print("Precision:", results["precision"])
     print("Recall:", results["recall"])
     print("F1:", results["f1"])
+    print("Model comparison:")
+    print(comparison.to_string(index=False))
 
 
 def main() -> None:
