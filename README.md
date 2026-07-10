@@ -2,7 +2,7 @@
 
 A Python project for an educational gene-expression cancer classification workflow.
 
-This repository provides a reproducible workflow for preparing gene expression data, creating rule-based binary cancer labels from tissue annotations, selecting gene-expression feature columns, training a simple classical machine-learning model, and evaluating classification performance.
+This repository provides a reproducible workflow for preparing gene expression data, creating rule-based binary cancer labels from tissue annotations, selecting gene-expression feature columns, comparing simple classical machine-learning models, and evaluating classification performance.
 
 The project is educational and exploratory. It is not intended to be used as a clinical diagnostic tool.
 
@@ -12,7 +12,7 @@ The repository includes:
 
 - an exploratory notebook for analysis and reporting
 - an installable Python package under `src/`
-- reusable modules for data validation, label creation, feature selection, class-balance inspection, model training, evaluation, plotting, and command-line execution
+- reusable modules for data validation, label creation, feature selection, class-balance inspection, model training, model comparison, evaluation, plotting, and command-line execution
 - automated tests with `pytest`
 - a command-line interface for running reproducible example workflows
 - a small toy gene expression CSV example for demonstrating the package workflow
@@ -56,13 +56,13 @@ Additional documentation is available in the `docs/` directory:
 
 - [`docs/dataset.md`](docs/dataset.md) — dataset availability, expected local data placement, toy dataset information, and label creation
 - [`docs/usage.md`](docs/usage.md) — installation, testing, and command-line usage
-- [`docs/methods.md`](docs/methods.md) — methodological choices, evaluation metrics, and reproducibility notes
+- [`docs/methods.md`](docs/methods.md) — methodological choices, evaluation metrics, model comparison, and reproducibility notes
 
 ## Main modules
 
 - `data_preparation.py` — utilities for validating gene-expression tables, creating binary labels, selecting gene feature columns, creating feature-label data, checking class balance, filtering tissues, defining tissue subsets, and splitting data
 - `evaluation.py` — reusable evaluation helpers for binary classification metrics
-- `models.py` — helper for fitting and evaluating classical machine-learning models
+- `models.py` — helpers for building default classical models, fitting and evaluating models, and comparing multiple models in a metric table
 - `plotting.py` — plotting helper for confusion matrix heatmaps
 - `cli.py` — command-line interface for running reproducible example workflows
 - `run_classical_models.py` — compatibility script for running the small classical model example
@@ -115,6 +115,7 @@ The tests cover:
 - tissue filtering and predefined subset creation
 - train, validation, and test splitting checks
 - exact binary classification metrics
+- classical model training and model-comparison behaviour
 - command-line interface behaviour
 - plotting helper behaviour
 - compatibility script execution
@@ -166,7 +167,8 @@ This command:
 - selects columns starting with `gene_` as features
 - reports class balance
 - trains a logistic regression model
-- prints evaluation metrics
+- compares default classical models using the same evaluation metrics
+- prints evaluation metrics and a model comparison table
 
 ## Notebook
 
