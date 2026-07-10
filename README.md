@@ -1,8 +1,8 @@
 # Gene Expression Cancer Classification
 
-A Python project for gene-expression-based cancer classification.
+A Python project for an educational gene-expression cancer classification workflow.
 
-This repository provides a reproducible educational workflow for preparing gene expression data, creating rule-based binary cancer labels from tissue annotations, training simple classical machine-learning models, and evaluating classification performance.
+This repository provides a reproducible workflow for preparing gene expression data, creating rule-based binary cancer labels from tissue annotations, selecting gene-expression feature columns, training a simple classical machine-learning model, and evaluating classification performance.
 
 The project is educational and exploratory. It is not intended to be used as a clinical diagnostic tool.
 
@@ -12,7 +12,7 @@ The repository includes:
 
 - an exploratory notebook for analysis and reporting
 - an installable Python package under `src/`
-- reusable modules for data preparation, evaluation, model training, plotting, and command-line execution
+- reusable modules for data validation, label creation, feature selection, class-balance inspection, model training, evaluation, plotting, and command-line execution
 - automated tests with `pytest`
 - a command-line interface for running reproducible example workflows
 - a small toy gene expression CSV example for demonstrating the package workflow
@@ -60,11 +60,11 @@ Additional documentation is available in the `docs/` directory:
 
 ## Main modules
 
-- `cli.py` — command-line interface for running reproducible example workflows
-- `data_preparation.py` — utilities for binary label creation, tissue filtering, subset definition, and train/validation/test splitting
-- `evaluation.py` — reusable evaluation helpers
-- `models.py` — utilities for training and evaluating classical machine-learning models
+- `data_preparation.py` — utilities for validating gene-expression tables, creating binary labels, selecting gene feature columns, creating feature-label data, checking class balance, filtering tissues, defining tissue subsets, and splitting data
+- `evaluation.py` — reusable evaluation helpers for binary classification metrics
+- `models.py` — helper for fitting and evaluating classical machine-learning models
 - `plotting.py` — plotting helper for confusion matrix heatmaps
+- `cli.py` — command-line interface for running reproducible example workflows
 - `run_classical_models.py` — compatibility script for running the small classical model example
 
 ## Important limitation
@@ -93,7 +93,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-The `requirements.txt` file installs the project in editable mode using the configuration in `pyproject.toml`.
+The project dependencies are defined in `pyproject.toml`. The `requirements.txt` file installs the local project in editable mode together with the development dependencies.
 
 ## Running tests
 
@@ -104,6 +104,20 @@ python -m pytest
 ```
 
 The automated tests use small artificial examples and do not require the full external gene expression dataset.
+
+The tests cover:
+
+- rule-based label creation
+- gene-expression table validation
+- gene feature column selection
+- feature-label data creation
+- class-balance summarisation
+- tissue filtering and predefined subset creation
+- train, validation, and test splitting checks
+- exact binary classification metrics
+- command-line interface behaviour
+- plotting helper behaviour
+- compatibility script execution
 
 ## Running the classical model example
 
@@ -147,8 +161,10 @@ gene-cancer-classify train-example
 This command:
 
 - loads the toy CSV file
+- validates that the expected tissue and gene-expression columns are present
 - creates binary labels from the tissue annotation
-- uses columns starting with `gene_` as features
+- selects columns starting with `gene_` as features
+- reports class balance
 - trains a logistic regression model
 - prints evaluation metrics
 
@@ -157,3 +173,7 @@ This command:
 The notebook `exploratory_gene_expression_analysis.ipynb` is kept as an exploratory analysis and reporting layer.
 
 Reusable code is stored in the Python package under `src/gene_expression_cancer_classification/`.
+
+## Use of assistance
+
+Language and documentation drafting tools were used to improve clarity and structure. The project code, design decisions, tests, command-line workflows, and final validation were reviewed and executed by the author.
