@@ -1,10 +1,12 @@
+import pytest
+
 from gene_expression_cancer_classification.cli import main
 
 
 def test_cli_example_runs_without_error(monkeypatch, capsys):
     """
-    Test that the basic CLI example command runs and prints the main
-    evaluation outputs.
+    Check that the basic CLI example command runs successfully and prints
+    the expected evaluation report for the minimal artificial dataset.
     """
     monkeypatch.setattr("sys.argv", ["gene-cancer-classify", "example"])
 
@@ -13,17 +15,17 @@ def test_cli_example_runs_without_error(monkeypatch, capsys):
     captured = capsys.readouterr()
 
     assert "Predictions:" in captured.out
-    assert "Accuracy:" in captured.out
+    assert "Accuracy: 1.0" in captured.out
     assert "Confusion matrix:" in captured.out
-    assert "Precision:" in captured.out
-    assert "Recall:" in captured.out
-    assert "F1:" in captured.out
+    assert "Precision: 1.0" in captured.out
+    assert "Recall: 1.0" in captured.out
+    assert "F1: 1.0" in captured.out
 
 
 def test_cli_train_example_runs_without_error(monkeypatch, capsys):
     """
-    Test that the toy gene expression CLI workflow runs and prints
-    dataset information and evaluation outputs.
+    Check that the toy gene expression CLI workflow loads the example CSV,
+    reports dataset information, and prints exact evaluation metrics.
     """
     monkeypatch.setattr("sys.argv", ["gene-cancer-classify", "train-example"])
 
@@ -32,8 +34,24 @@ def test_cli_train_example_runs_without_error(monkeypatch, capsys):
     captured = capsys.readouterr()
 
     assert "Input file:" in captured.out
-    assert "Number of samples:" in captured.out
-    assert "Feature columns:" in captured.out
-    assert "Accuracy:" in captured.out
+    assert "examples" in captured.out
+    assert "toy_gene_expression.csv" in captured.out
+    assert "Number of samples: 12" in captured.out
+    assert "Feature columns: ['gene_1', 'gene_2', 'gene_3', 'gene_4']" in captured.out
+    assert "Class balance: {0: 6, 1: 6}" in captured.out
+    assert "Accuracy: 1.0" in captured.out
     assert "Confusion matrix:" in captured.out
-    assert "F1:" in captured.out
+    assert "Precision: 1.0" in captured.out
+    assert "Recall: 1.0" in captured.out
+    assert "F1: 1.0" in captured.out
+
+
+def test_cli_rejects_unknown_command(monkeypatch):
+    """
+    Check that the command-line interface rejects unsupported commands
+    through argparse instead of silently doing nothing.
+    """
+    monkeypatch.setattr("sys.argv", ["gene-cancer-classify", "unknown-command"])
+
+    with pytest.raises(SystemExit):
+        main()
