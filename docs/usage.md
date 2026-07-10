@@ -1,6 +1,6 @@
 # Usage
 
-This document describes how to install the project, run the automated tests, and execute the small classical model example.
+This document describes how to install the project, run the automated tests, and execute the example workflows.
 
 ## 1. Create a virtual environment
 
@@ -28,7 +28,9 @@ Install the project and its development dependencies with:
 python -m pip install -r requirements.txt
 ```
 
-The `requirements.txt` file installs the package in editable mode using the project configuration in `pyproject.toml`.
+The project dependencies are defined in `pyproject.toml`.
+
+The `requirements.txt` file installs the local package in editable mode, including the development dependencies needed for testing.
 
 Editable installation means that changes to the source files under `src/` are immediately available without reinstalling the package.
 
@@ -41,6 +43,10 @@ python -m pytest
 ```
 
 A successful run should report all tests as passed.
+
+The tests use small artificial examples and do not require the full external gene expression dataset.
+
+The tests cover data validation, label creation, feature selection, class-balance summarisation, model evaluation, command-line execution, plotting behaviour, and expected error cases.
 
 ## 4. Run the classical model example
 
@@ -81,10 +87,20 @@ Run the toy workflow with:
 gene-cancer-classify train-example
 ```
 
-This command loads the toy CSV file, creates binary labels from the tissue annotation, uses columns starting with `gene_` as features, trains a logistic regression model, and prints evaluation metrics.
+This command:
+
+- loads the toy CSV file
+- validates that the expected `tissue` column and `gene_` feature columns are present
+- creates binary labels from the tissue annotation
+- selects columns starting with `gene_` as model features
+- reports class balance
+- trains a logistic regression model
+- prints evaluation metrics
+
+The output includes dataset information, selected feature columns, class balance, predictions, and evaluation results.
 
 ## 6. Notes
 
-The automated tests do not require the full gene expression dataset.
+The full gene expression dataset is not required for installation, testing, or running the toy example.
 
-They use small artificial examples so that the test suite can run quickly and reproducibly on any machine.
+The full dataset is only needed for reproducing the exploratory analysis described in the notebook and dataset documentation.
