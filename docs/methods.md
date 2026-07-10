@@ -98,23 +98,38 @@ The evaluation helper uses a fixed binary label order `[0, 1]` for the confusion
 
 Undefined precision, recall, or F1 cases are handled with `zero_division=0`. This avoids warnings when a model does not predict any positive samples and makes the metric behavior explicit and testable.
 
-## 8. Classical model example
+## 8. Classical models
 
-The current runnable example uses logistic regression.
+The runnable examples use simple classical machine-learning models.
 
-The purpose of this example is not to provide a final biological model.
+The basic example trains one logistic regression model on a tiny artificial dataset.
 
-Its purpose is to demonstrate that the package can:
+The toy gene expression workflow uses:
 
-- validate a small gene expression table
-- create rule-based labels
-- select gene-expression feature columns
-- report class balance
-- train a classical model
-- generate predictions
-- print evaluation metrics
+- logistic regression with standard scaling
+- a shallow decision tree classifier
 
-## 9. Automated tests
+These models are intentionally simple. They are included to demonstrate a reproducible comparison workflow rather than to claim biological or clinical performance.
+
+## 9. Model comparison
+
+The helper `build_default_classical_models` creates the default candidate models used in the toy workflow.
+
+The helper `compare_classical_models` trains each candidate model on the same training data and evaluates each model on the same test data.
+
+The returned comparison table includes:
+
+- model name
+- accuracy
+- precision
+- recall
+- F1 score
+
+The table is sorted by F1 score by default.
+
+This step makes the workflow more informative than a single-model demonstration because the same evaluation criteria are applied consistently to more than one candidate model.
+
+## 10. Automated tests
 
 The automated tests use small artificial datasets.
 
@@ -125,6 +140,6 @@ This keeps the tests:
 - independent of large external data files
 - easy to run on any machine
 
-The tests check both normal behaviour and error cases, including missing required columns, missing gene feature columns, single-class labels, exact metric values, command-line behaviour, and plotting output.
+The tests check both normal behaviour and error cases, including missing required columns, missing gene feature columns, single-class labels, exact metric values, model-comparison behaviour, command-line behaviour, and plotting output.
 
 The full gene expression dataset is therefore not required to run the test suite.
