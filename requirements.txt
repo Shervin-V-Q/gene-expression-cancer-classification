@@ -1,1 +1,2 @@
+# Install the local project in editable mode, including development tools.
 -e ".[dev]"
