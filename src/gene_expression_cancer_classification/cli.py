@@ -5,7 +5,12 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
-from gene_expression_cancer_classification.data_preparation import add_binary_label
+from gene_expression_cancer_classification.data_preparation import (
+    add_binary_label,
+    create_feature_label_data,
+    summarize_class_balance,
+    validate_gene_expression_table,
+)
 from gene_expression_cancer_classification.models import (
     train_and_evaluate_classical_model,
 )
@@ -57,8 +62,8 @@ def run_train_example() -> None:
     Returns
     -------
     None
-        The function prints dataset information, predictions, and evaluation
-        metrics to the terminal.
+        The function prints dataset information, class balance, predictions,
+        and evaluation metrics to the terminal.
 
     Raises
     ------
@@ -66,14 +71,14 @@ def run_train_example() -> None:
         If the toy dataset cannot be found at
         ``examples/toy_gene_expression.csv``.
     ValueError
-        If no columns starting with ``gene_`` are found.
+        If the toy dataset does not contain the expected project columns.
 
     Notes
     -----
     This command reads the small toy CSV file included in the repository,
-    creates rule-based binary labels from the ``tissue`` annotation, uses
-    columns starting with ``gene_`` as features, trains a logistic regression
-    model, and prints evaluation metrics.
+    validates its structure, creates rule-based binary labels from the
+    ``tissue`` annotation, selects gene expression feature columns, trains a
+    logistic regression model, and prints evaluation metrics.
 
     The toy dataset is intended only to demonstrate the package workflow and
     should not be used for biological or clinical conclusions.
@@ -87,20 +92,11 @@ def run_train_example() -> None:
         )
 
     data = pd.read_csv(input_path)
+    validate_gene_expression_table(data)
 
     labeled_data = add_binary_label(data)
-
-    feature_columns = [
-        column for column in labeled_data.columns if column.startswith("gene_")
-    ]
-
-    if not feature_columns:
-        raise ValueError(
-            "No gene expression columns found. Expected columns starting with 'gene_'."
-        )
-
-    x = labeled_data[feature_columns]
-    y = labeled_data["label"]
+    class_balance = summarize_class_balance(labeled_data)
+    x, y = create_feature_label_data(labeled_data)
 
     x_train, x_test, y_train, y_test = train_test_split(
         x,
@@ -121,7 +117,8 @@ def run_train_example() -> None:
 
     print("Input file:", input_path)
     print("Number of samples:", len(labeled_data))
-    print("Feature columns:", feature_columns)
+    print("Feature columns:", list(x.columns))
+    print("Class balance:", class_balance)
     print("Predictions:", results["predictions"])
     print("Accuracy:", results["accuracy"])
     print("Confusion matrix:")
