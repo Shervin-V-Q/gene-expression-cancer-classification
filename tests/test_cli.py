@@ -46,6 +46,26 @@ def test_cli_train_example_runs_without_error(monkeypatch, capsys):
     assert "F1: 1.0" in captured.out
 
 
+def test_cli_train_example_prints_model_comparison(monkeypatch, capsys):
+    """
+    Check that the toy workflow reports a model comparison table, making
+    the command more informative than a single-model demonstration.
+    """
+    monkeypatch.setattr("sys.argv", ["gene-cancer-classify", "train-example"])
+
+    main()
+
+    captured = capsys.readouterr()
+
+    assert "Model comparison:" in captured.out
+    assert "logistic_regression" in captured.out
+    assert "decision_tree" in captured.out
+    assert "accuracy" in captured.out
+    assert "precision" in captured.out
+    assert "recall" in captured.out
+    assert "f1" in captured.out
+
+
 def test_cli_rejects_unknown_command(monkeypatch):
     """
     Check that the command-line interface rejects unsupported commands
