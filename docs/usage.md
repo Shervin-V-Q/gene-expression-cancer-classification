@@ -46,7 +46,7 @@ A successful run should report all tests as passed.
 
 The tests use small artificial examples and do not require the full external gene expression dataset.
 
-The tests cover data validation, label creation, feature selection, class-balance summarisation, model evaluation, command-line execution, plotting behaviour, and expected error cases.
+The tests cover data validation, label creation, feature selection, class-balance summarisation, model evaluation, model-comparison behaviour, command-line execution, plotting behaviour, and expected error cases.
 
 ## 4. Run the classical model example
 
@@ -95,9 +95,10 @@ This command:
 - selects columns starting with `gene_` as model features
 - reports class balance
 - trains a logistic regression model
-- prints evaluation metrics
+- compares default classical models using the same evaluation metrics
+- prints evaluation metrics and a model comparison table
 
-The output includes dataset information, selected feature columns, class balance, predictions, and evaluation results.
+The output includes dataset information, selected feature columns, class balance, predictions, evaluation results, and the model comparison table.
 
 ## 6. Notes
 
