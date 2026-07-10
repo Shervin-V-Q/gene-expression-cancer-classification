@@ -7,6 +7,147 @@ CANCER_KEYWORDS = (
 )
 
 
+def validate_gene_expression_table(
+    data: pd.DataFrame,
+    tissue_column: str = "tissue",
+) -> None:
+    """
+    Validate that the input table has the minimum expected project structure.
+
+    Parameters
+    ----------
+    data
+        Input dataframe to validate.
+    tissue_column
+        Name of the column containing tissue annotations.
+
+    Returns
+    -------
+    None
+        The function raises an error if validation fails.
+
+    Raises
+    ------
+    ValueError
+        If the tissue annotation column is missing.
+    ValueError
+        If no gene expression columns starting with ``gene_`` are found.
+
+    Notes
+    -----
+    This validation is intentionally lightweight. It checks the structural
+    assumptions used by the example workflow without making assumptions about
+    the full external dataset.
+    """
+    if tissue_column not in data.columns:
+        raise ValueError(f"Input dataframe must contain a '{tissue_column}' column.")
+
+    gene_columns = select_gene_feature_columns(data)
+
+    if not gene_columns:
+        raise ValueError("Input dataframe must contain columns starting with 'gene_'.")
+
+
+def select_gene_feature_columns(
+    data: pd.DataFrame,
+    prefix: str = "gene_",
+) -> list[str]:
+    """
+    Select gene expression feature columns from a dataframe.
+
+    Parameters
+    ----------
+    data
+        Input dataframe containing feature columns.
+    prefix
+        Prefix used to identify gene expression columns.
+
+    Returns
+    -------
+    list[str]
+        Column names that start with the selected prefix.
+
+    Notes
+    -----
+    The project uses this helper to keep feature selection explicit and
+    reproducible across the command-line workflow and tests.
+    """
+    return [column for column in data.columns if column.startswith(prefix)]
+
+
+def create_feature_label_data(
+    data: pd.DataFrame,
+    feature_prefix: str = "gene_",
+) -> tuple[pd.DataFrame, pd.Series]:
+    """
+    Create feature and label objects for model training.
+
+    Parameters
+    ----------
+    data
+        Input dataframe containing gene expression columns and a ``label`` column.
+    feature_prefix
+        Prefix used to identify gene expression feature columns.
+
+    Returns
+    -------
+    tuple[pandas.DataFrame, pandas.Series]
+        Feature matrix and binary label vector.
+
+    Raises
+    ------
+    ValueError
+        If no gene expression feature columns are found.
+    ValueError
+        If the input dataframe does not contain a ``label`` column.
+    """
+    feature_columns = select_gene_feature_columns(data, prefix=feature_prefix)
+
+    if not feature_columns:
+        raise ValueError(
+            f"No gene expression columns found. Expected columns starting with "
+            f"'{feature_prefix}'."
+        )
+
+    if "label" not in data.columns:
+        raise ValueError("Input dataframe must contain a 'label' column.")
+
+    x = data[feature_columns]
+    y = data["label"]
+
+    return x, y
+
+
+def summarize_class_balance(data: pd.DataFrame) -> dict[int, int]:
+    """
+    Count the number of samples in each binary label class.
+
+    Parameters
+    ----------
+    data
+        Input dataframe containing a ``label`` column.
+
+    Returns
+    -------
+    dict[int, int]
+        Dictionary mapping each label value to its sample count.
+
+    Raises
+    ------
+    ValueError
+        If the input dataframe does not contain a ``label`` column.
+
+    Notes
+    -----
+    This helper makes class balance inspection explicit, which is important
+    because accuracy alone can be misleading for imbalanced biological data.
+    """
+    if "label" not in data.columns:
+        raise ValueError("Input dataframe must contain a 'label' column.")
+
+    return data["label"].value_counts().sort_index().to_dict()
+
+
 def add_binary_label(data: pd.DataFrame) -> pd.DataFrame:
     """
     Add a binary cancer label inferred from the tissue annotation.
