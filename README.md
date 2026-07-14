@@ -14,7 +14,7 @@ The repository includes:
 - an installable Python package under `src/`
 - reusable modules for data validation, label creation, feature selection, class-balance inspection, model training, model comparison, evaluation, plotting, and command-line execution
 - automated tests with `pytest`
-- a command-line interface for running reproducible example workflows
+- a command-line interface for running reproducible example workflows with configurable options
 - a small toy gene expression CSV example for demonstrating the package workflow
 - project configuration with `pyproject.toml`
 - additional documentation in the `docs/` directory
@@ -55,7 +55,7 @@ gene-expression-cancer-classification/
 Additional documentation is available in the `docs/` directory:
 
 - [`docs/dataset.md`](docs/dataset.md) — dataset availability, expected local data placement, toy dataset information, and label creation
-- [`docs/usage.md`](docs/usage.md) — installation, testing, and command-line usage
+- [`docs/usage.md`](docs/usage.md) — installation, testing, command-line usage, and configurable CLI options
 - [`docs/methods.md`](docs/methods.md) — methodological choices, evaluation metrics, model comparison, and reproducibility notes
 
 ## Main modules
@@ -64,7 +64,7 @@ Additional documentation is available in the `docs/` directory:
 - `evaluation.py` — reusable evaluation helpers for binary classification metrics
 - `models.py` — helpers for building default classical models, fitting and evaluating models, and comparing multiple models in a metric table
 - `plotting.py` — plotting helper for confusion matrix heatmaps
-- `cli.py` — command-line interface for running reproducible example workflows
+- `cli.py` — command-line interface for running reproducible example workflows with optional arguments
 - `run_classical_models.py` — compatibility script for running the small classical model example
 
 ## Important limitation
@@ -113,10 +113,10 @@ The tests cover:
 - feature-label data creation
 - class-balance summarisation
 - tissue filtering and predefined subset creation
-- train, validation, and test splitting checks
+- successful and invalid train/validation/test splitting checks
 - exact binary classification metrics
 - classical model training and model-comparison behaviour
-- command-line interface behaviour
+- command-line interface behaviour and configurable CLI options
 - plotting helper behaviour
 - compatibility script execution
 
@@ -169,6 +169,19 @@ This command:
 - trains a logistic regression model
 - compares default classical models using the same evaluation metrics
 - prints evaluation metrics and a model comparison table
+
+The toy workflow also accepts optional command-line arguments:
+
+```bash
+gene-cancer-classify train-example --input-path examples/toy_gene_expression.csv --test-size 0.33 --random-state 42 --sort-by f1
+```
+
+Available options:
+
+- `--input-path`: path to the input CSV file
+- `--test-size`: fraction of samples assigned to the test split
+- `--random-state`: random seed used for reproducible splitting and model construction
+- `--sort-by`: metric used to sort the model comparison table; one of `accuracy`, `precision`, `recall`, or `f1`
 
 ## Notebook
 
