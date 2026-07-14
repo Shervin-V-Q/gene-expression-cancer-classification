@@ -39,6 +39,8 @@ def test_cli_train_example_runs_without_error(monkeypatch, capsys):
     assert "Number of samples: 12" in captured.out
     assert "Feature columns: ['gene_1', 'gene_2', 'gene_3', 'gene_4']" in captured.out
     assert "Class balance: {0: 6, 1: 6}" in captured.out
+    assert "Test size: 0.33" in captured.out
+    assert "Random state: 42" in captured.out
     assert "Accuracy: 1.0" in captured.out
     assert "Confusion matrix:" in captured.out
     assert "Precision: 1.0" in captured.out
@@ -64,6 +66,59 @@ def test_cli_train_example_prints_model_comparison(monkeypatch, capsys):
     assert "precision" in captured.out
     assert "recall" in captured.out
     assert "f1" in captured.out
+
+
+def test_cli_train_example_accepts_configurable_options(monkeypatch, capsys):
+    """
+    Check that the toy workflow accepts command-line options for the input
+    path, test split, random seed, and model-comparison sorting metric.
+    """
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "gene-cancer-classify",
+            "train-example",
+            "--input-path",
+            "examples/toy_gene_expression.csv",
+            "--test-size",
+            "0.33",
+            "--random-state",
+            "42",
+            "--sort-by",
+            "accuracy",
+        ],
+    )
+
+    main()
+
+    captured = capsys.readouterr()
+
+    assert "Input file:" in captured.out
+    assert "toy_gene_expression.csv" in captured.out
+    assert "Test size: 0.33" in captured.out
+    assert "Random state: 42" in captured.out
+    assert "Model comparison:" in captured.out
+    assert "logistic_regression" in captured.out
+    assert "decision_tree" in captured.out
+
+
+def test_cli_train_example_rejects_invalid_test_size(monkeypatch):
+    """
+    Check that the toy workflow rejects invalid test split sizes instead of
+    silently running with an impossible configuration.
+    """
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "gene-cancer-classify",
+            "train-example",
+            "--test-size",
+            "1.0",
+        ],
+    )
+
+    with pytest.raises(ValueError, match="test_size"):
+        main()
 
 
 def test_cli_rejects_unknown_command(monkeypatch):
