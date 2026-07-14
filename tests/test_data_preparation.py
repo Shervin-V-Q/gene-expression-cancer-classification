@@ -364,3 +364,39 @@ def test_preprocess_and_split_rejects_single_class_labels():
 
     with pytest.raises(ValueError, match="exactly two classes"):
         preprocess_and_split(data)
+
+
+def test_preprocess_and_split_returns_expected_split_sizes_and_labels():
+    """
+    Check that preprocessing creates train, validation, and test splits
+    while preserving both binary classes in each split.
+    """
+    data = pd.DataFrame(
+        {
+            "gene_1": list(range(20)),
+            "gene_2": list(range(20, 40)),
+            "label": [0, 1] * 10,
+        }
+    )
+
+    train, validate, test = preprocess_and_split(
+        data,
+        test_size=0.2,
+        validate_size=0.25,
+        random_state=42,
+    )
+
+    assert len(train) == 12
+    assert len(validate) == 4
+    assert len(test) == 4
+
+    assert set(train["label"]) == {0, 1}
+    assert set(validate["label"]) == {0, 1}
+    assert set(test["label"]) == {0, 1}
+
+    combined_indices = set(train.index) | set(validate.index) | set(test.index)
+
+    assert combined_indices == set(data.index)
+    assert set(train.index).isdisjoint(validate.index)
+    assert set(train.index).isdisjoint(test.index)
+    assert set(validate.index).isdisjoint(test.index)
