@@ -46,7 +46,7 @@ A successful run should report all tests as passed.
 
 The tests use small artificial examples and do not require the full external gene expression dataset.
 
-The tests cover data validation, label creation, feature selection, class-balance summarisation, model evaluation, model-comparison behaviour, command-line execution, plotting behaviour, and expected error cases.
+The tests cover data validation, label creation, feature selection, class-balance summarisation, model evaluation, model-comparison behaviour, command-line execution, configurable CLI options, plotting behaviour, and expected error cases.
 
 ## 4. Run the classical model example
 
@@ -81,7 +81,7 @@ examples/toy_gene_expression.csv
 
 This toy dataset is intentionally small and is used only to demonstrate the package workflow without requiring the full external dataset. It is not intended for biological or clinical conclusions.
 
-Run the toy workflow with:
+Run the toy workflow with the default options:
 
 ```bash
 gene-cancer-classify train-example
@@ -98,9 +98,43 @@ This command:
 - compares default classical models using the same evaluation metrics
 - prints evaluation metrics and a model comparison table
 
-The output includes dataset information, selected feature columns, class balance, predictions, evaluation results, and the model comparison table.
+The output includes dataset information, selected feature columns, class balance, test split size, random seed, predictions, evaluation results, and the model comparison table.
 
-## 6. Notes
+## 6. Configurable CLI options
+
+The `train-example` command accepts optional arguments so that the workflow can be run without editing the source code.
+
+Example:
+
+```bash
+gene-cancer-classify train-example --input-path examples/toy_gene_expression.csv --test-size 0.33 --random-state 42 --sort-by f1
+```
+
+Available options:
+
+- `--input-path`: path to the input CSV file
+- `--test-size`: fraction of samples assigned to the test split
+- `--random-state`: random seed used for reproducible splitting and model construction
+- `--sort-by`: metric used to sort the model comparison table
+
+The `--sort-by` option accepts:
+
+```text
+accuracy
+precision
+recall
+f1
+```
+
+For example, to sort the model comparison table by accuracy:
+
+```bash
+gene-cancer-classify train-example --sort-by accuracy
+```
+
+Invalid test split sizes, such as `--test-size 1.0`, are rejected with a clear error.
+
+## 7. Notes
 
 The full gene expression dataset is not required for installation, testing, or running the toy example.
 
